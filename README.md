@@ -1,6 +1,6 @@
 # RL Maintenance under Imperfect Inspections
 
-Interactive companion app for the paper **"Deep Reinforcement Learning for Multi-Component Maintenance under Imperfect Inspections"**.
+Interactive companion app for the paper **"Deep Reinforcement Learning for Maintenance under Imperfect Inspections, with a Web-Based Decision Tool"**.
 
 **Live app:** https://rl-maintenance.streamlit.app/
 
@@ -64,7 +64,7 @@ The trained networks are stored as NumPy arrays and evaluated with NumPy, so the
 
 ## Citation
 
-The paper *Deep Reinforcement Learning for Multi-Component Maintenance under Imperfect Inspections* is
+The paper *Deep Reinforcement Learning for Maintenance under Imperfect Inspections, with a Web-Based Decision Tool* is
 currently under review. Citation details will be added here after publication.
 
 ## Contact

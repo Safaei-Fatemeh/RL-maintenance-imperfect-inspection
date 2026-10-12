@@ -93,7 +93,7 @@ W, R = resources()
 
 # ── About ────────────────────────────────────────────────────────────────────
 def page_about():
-    hero("Deep Reinforcement Learning for Multi-Component Maintenance",
+    hero("Deep Reinforcement Learning for Maintenance under Imperfect Inspections",
          "Interactive companion to the paper: imperfect inspections, Bayesian degradation estimates, "
          "adaptive inspection intervals and learned maintenance policies.")
     st.markdown("#### Who is this app for?")
@@ -422,7 +422,7 @@ with st.sidebar:
 <div class="sb-step"><div class="n">2</div><div>Combine each reading with the virtual age into a Bayesian estimate</div></div>
 <div class="sb-step"><div class="n">3</div><div>Choose one of five actions per component</div></div>
 <div class="sb-step"><div class="n">4</div><div>Set the next inspection from the most degraded component</div></div>
-<div class="sb-foot">Companion app of the paper<br><b>Deep Reinforcement Learning for Multi-Component
-Maintenance under Imperfect Inspections</b></div>
+<div class="sb-foot">Companion app of the paper<br><b>Deep Reinforcement Learning for Maintenance under
+Imperfect Inspections, with a Web-Based Decision Tool</b></div>
 """, unsafe_allow_html=True)
 nav.run()
