@@ -96,6 +96,18 @@ def page_about():
     hero("Deep Reinforcement Learning for Multi-Component Maintenance",
          "Interactive companion to the paper: imperfect inspections, Bayesian degradation estimates, "
          "adaptive inspection intervals and learned maintenance policies.")
+    st.markdown("#### Who is this app for?")
+    c = st.columns(4)
+    with c[0]:
+        card("Maintenance engineers", "From an inspection reading to a recommended action and next inspection.")
+    with c[1]:
+        card("Asset managers", "Compare strategies and see what drives the total maintenance cost.")
+    with c[2]:
+        card("Researchers and students", "Explore the model and the trained reinforcement learning agents.")
+    with c[3]:
+        card("Reviewers and readers", "Check the paper's results interactively.")
+    st.write("")
+
     b, ii, pi = R["base_cost_CBT-R-DS"], R["base_cost_DQN-II-DS"], R["base_cost_DQN-PI-DS"]
     k = st.columns(4)
     k[0].metric("Best implementable policy", "CBT-R-DS", f"{100 * (R['base_cost_STP'] - b) / R['base_cost_STP']:.1f}% vs static threshold",
@@ -127,21 +139,6 @@ def page_about():
     with c[2]:
         card("Compare policies", "Monte Carlo cost comparison with a breakdown into "
              "inspection, maintenance and failure costs.")
-
-    st.markdown("### Who is this app for?")
-    c = st.columns(4)
-    with c[0]:
-        card("Maintenance engineers", "Turn a noisy inspection reading into a degradation estimate, see the "
-             "failure risk of each action and get a recommended action and next inspection date.")
-    with c[1]:
-        card("Reliability and asset managers", "Compare maintenance strategies and see how inspection cost, "
-             "failure cost and inspection quality change the total cost of a policy.")
-    with c[2]:
-        card("Researchers and students", "Explore the gamma degradation model, the Bayesian update and the "
-             "trained reinforcement learning agents, and reproduce the results of the paper.")
-    with c[3]:
-        card("Reviewers and readers", "Check the paper's results interactively and test the policies on "
-             "simulated histories of their own choosing.")
     st.write("")
     st.caption("All costs are in normalised cost units per unit time.")
 
