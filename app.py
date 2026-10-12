@@ -36,6 +36,34 @@ div[data-testid="stMetricValue"] {color: #4F46E5;}
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+section[data-testid="stSidebar"] {background: linear-gradient(180deg, #1E1B4B 0%, #312E81 55%, #3730A3 100%);}
+section[data-testid="stSidebar"] * {color: #E0E7FF;}
+section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a {border-radius: 10px; margin: 2px 6px;
+       padding: .45rem .7rem; transition: all .15s ease;}
+section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a:hover {background: rgba(255,255,255,.10);
+       transform: translateX(3px);}
+section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a[aria-current="page"] {
+       background: linear-gradient(90deg, rgba(165,180,252,.35), rgba(34,211,238,.20));
+       box-shadow: inset 3px 0 0 #22D3EE;}
+section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a span {font-weight: 500;}
+.sb-title {font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #A5B4FC !important;
+       margin: 1.1rem 0 .5rem .2rem; font-weight: 700;}
+.sb-grid {display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;}
+.sb-stat {background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+       padding: .6rem .7rem;}
+.sb-stat .v {font-size: 1.25rem; font-weight: 700; color: #FFFFFF !important; line-height: 1.2;}
+.sb-stat .l {font-size: .72rem; color: #C7D2FE !important;}
+.sb-step {display: flex; gap: .6rem; align-items: flex-start; margin: .45rem 0; font-size: .85rem;}
+.sb-step .n {flex: 0 0 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg,#A5B4FC,#22D3EE);
+       color: #1E1B4B !important; font-weight: 700; font-size: .75rem; display: flex; align-items: center;
+       justify-content: center;}
+.sb-foot {margin-top: 1.2rem; padding-top: .8rem; border-top: 1px solid rgba(255,255,255,.15);
+       font-size: .75rem; color: #A5B4FC !important; line-height: 1.5;}
+</style>
+""", unsafe_allow_html=True)
+
 
 def hero(title, subtitle):
     st.markdown(f'<div class="hero"><h1>{title}</h1><p>{subtitle}</p></div>', unsafe_allow_html=True)
@@ -360,6 +388,7 @@ def page_results():
         st.plotly_chart(style(fig, 440), width="stretch")
 
 
+st.logo(str(m.DATA / "logo.svg"), size="large", icon_image=str(m.DATA / "logo_icon.svg"))
 nav = st.navigation([
     st.Page(page_about, title="Overview", icon=":material/home:", default=True),
     st.Page(page_calculator, title="Inspection calculator", icon=":material/calculate:"),
@@ -367,7 +396,22 @@ nav = st.navigation([
     st.Page(page_compare, title="Compare policies", icon=":material/leaderboard:"),
     st.Page(page_results, title="Paper results", icon=":material/insights:"),
 ])
+rule_saving = 100 * (R["base_cost_STP"] - R["base_cost_CBT-R-DS"]) / R["base_cost_STP"]
 with st.sidebar:
-    st.caption("Companion app of the paper *Deep Reinforcement Learning for Multi-Component Maintenance "
-               "under Imperfect Inspections*.")
+    st.markdown(f"""
+<div class="sb-title">Key results</div>
+<div class="sb-grid">
+  <div class="sb-stat"><div class="v">{rule_saving:.1f}%</div><div class="l">Bayesian rule vs static threshold</div></div>
+  <div class="sb-stat"><div class="v">{R['base_saving_vs_DQN-II-FS']:.1f}%</div><div class="l">dynamic vs fixed interval (DQN)</div></div>
+  <div class="sb-stat"><div class="v">{R['base_saving_vs_DQN-RZ-DS']:.1f}%</div><div class="l">posterior vs raw reading (DQN)</div></div>
+  <div class="sb-stat"><div class="v">{R['val_rel_err_pct']:.2f}%</div><div class="l">posterior error vs Monte Carlo</div></div>
+</div>
+<div class="sb-title">How it works</div>
+<div class="sb-step"><div class="n">1</div><div>Inspect all components and get noisy readings</div></div>
+<div class="sb-step"><div class="n">2</div><div>Combine each reading with the virtual age into a Bayesian estimate</div></div>
+<div class="sb-step"><div class="n">3</div><div>Choose one of five actions per component</div></div>
+<div class="sb-step"><div class="n">4</div><div>Set the next inspection from the most degraded component</div></div>
+<div class="sb-foot">Companion app of the paper<br><b>Deep Reinforcement Learning for Multi-Component
+Maintenance under Imperfect Inspections</b></div>
+""", unsafe_allow_html=True)
 nav.run()
