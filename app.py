@@ -97,15 +97,13 @@ def page_about():
          "Interactive companion to the paper: imperfect inspections, Bayesian degradation estimates, "
          "adaptive inspection intervals and learned maintenance policies.")
     st.markdown("#### Who is this app for?")
-    c = st.columns(4)
+    c = st.columns(3)
     with c[0]:
         card("Maintenance engineers", "From an inspection reading to a recommended action and next inspection.")
     with c[1]:
         card("Asset managers", "Compare strategies and see what drives the total maintenance cost.")
     with c[2]:
         card("Researchers and students", "Explore the model and the trained reinforcement learning agents.")
-    with c[3]:
-        card("Reviewers and readers", "Check the paper's results interactively.")
     st.write("")
 
     b, ii, pi = R["base_cost_CBT-R-DS"], R["base_cost_DQN-II-DS"], R["base_cost_DQN-PI-DS"]
