@@ -1,6 +1,6 @@
 # RL Maintenance under Imperfect Inspections
 
-Interactive companion app for the paper **"Deep Reinforcement Learning for Maintenance under Imperfect Inspections, with a Web-Based Decision Tool"**.
+Interactive companion app for the paper **"Maintenance under Imperfect Inspections Using Deep Reinforcement Learning, with a Web-Based Decision Tool"**.
 
 **Live app:** https://rl-maintenance.streamlit.app/
 
@@ -10,7 +10,7 @@ The app lets you work directly with the model of the paper: estimate the true co
 
 ## The model in brief
 
-- **Degradation.** Each component degrades according to a gamma process and fails when its degradation reaches a threshold. Failures are detected immediately and followed by a corrective replacement.
+- **Degradation.** Each component degrades according to a gamma process and fails when its degradation reaches a threshold. A failure stops the system and is followed by a corrective replacement; in the model, the replaced component re-enters the system as new at the next inspection.
 - **Imperfect inspections.** An inspection returns a reading that is unbiased but whose error grows with the true degradation. Combined with the component's *virtual age* (time since renewal, reduced by repairs), the reading gives a closed-form gamma posterior for the true degradation.
 - **Maintenance actions.** Five actions per component: do nothing, imperfect repair, repair, imperfect replacement and replacement. Repeated imperfect actions become less effective.
 - **Adaptive inspection intervals.** All components are inspected together, and the next inspection is brought forward as the most degraded component approaches its threshold.
@@ -64,7 +64,7 @@ The trained networks are stored as NumPy arrays and evaluated with NumPy, so the
 
 ## Citation
 
-The paper *Deep Reinforcement Learning for Maintenance under Imperfect Inspections, with a Web-Based Decision Tool* is
+The paper *Maintenance under Imperfect Inspections Using Deep Reinforcement Learning, with a Web-Based Decision Tool* is
 currently under review. Citation details will be added here after publication.
 
 ## Contact

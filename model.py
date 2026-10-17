@@ -151,7 +151,7 @@ def paper_policies(system_key, weights, results):
         "CBT-DS (Bayesian threshold, dynamic interval)": (threshold_policy(p("CBT-DS")[0]), "ii", "ds", None, True),
         "CBT-R-DS (Bayesian repair/replace, dynamic interval)": (repair_replace_policy(*p("CBT-R-DS")), "ii", "ds", None, True),
     }
-    for name, info, sched in [("DQN-II-DS (proposed)", "ii", "ds"), ("DQN-II-FS", "ii", "fs"),
+    for name, info, sched in [("DQN-II-DS", "ii", "ds"), ("DQN-II-FS", "ii", "fs"),
                               ("DQN-PI-DS (true state, not implementable)", "pi", "ds")]:
         q = NumpyBranchingQ(weights, f"{system_key}_{info}_{sched}")
         pol[name] = ((lambda q, info: lambda env, est: q.act(dqn_features(env, info)[0]))(q, info),

@@ -93,7 +93,7 @@ W, R = resources()
 
 # ── About ────────────────────────────────────────────────────────────────────
 def page_about():
-    hero("Deep Reinforcement Learning for Maintenance under Imperfect Inspections",
+    hero("Maintenance under Imperfect Inspections Using Deep Reinforcement Learning",
          "Interactive companion to the paper: imperfect inspections, Bayesian degradation estimates, "
          "adaptive inspection intervals and learned maintenance policies.")
     st.markdown("#### Who is this app for?")
@@ -110,7 +110,7 @@ def page_about():
     k = st.columns(4)
     k[0].metric("Best implementable policy", "CBT-R-DS", f"{100 * (R['base_cost_STP'] - b) / R['base_cost_STP']:.1f}% vs static threshold",
                 delta_color="normal")
-    k[1].metric("Proposed DQN cost", f"{ii:.2f}", f"{100 * (ii - b) / b:+.1f}% vs CBT-R-DS", delta_color="inverse")
+    k[1].metric("DQN-II-DS cost", f"{ii:.2f}", f"{100 * (ii - b) / b:+.1f}% vs CBT-R-DS", delta_color="inverse")
     k[2].metric("DQN with true state", f"{pi:.2f}", f"{100 * (pi - b) / b:+.1f}% vs CBT-R-DS", delta_color="inverse")
     k[3].metric("Posterior check (MC error)", f"{R['val_rel_err_pct']:.2f}%")
 
@@ -152,7 +152,7 @@ def page_calculator():
             theta = st.number_input("Scale θ", 0.01, 10.0, 1.00, 0.05, format="%.3f")
             H = st.number_input("Failure threshold H", 0.1, 100.0, 10.0, 0.5)
             gn = st.number_input("Inspection quality γ_noise", 0.1, 100.0, 3.0, 0.5,
-                                 help="Larger values mean more accurate readings (std of a reading = x/√γ).")
+                                 help="Larger values mean more accurate readings (std of a reading = x/√γ_noise).")
         with c2:
             st.markdown("**History and reading**")
             v = st.number_input("Virtual age v", 0.0, 1000.0, 25.0, 1.0,
@@ -164,7 +164,7 @@ def page_calculator():
             st.markdown("**Inspection rule and policy**")
             dt_max = st.number_input("Δt_max", 0.1, 100.0, 15.0, 0.5)
             dt_min = st.number_input("Δt_min", 0.01, 10.0, 0.5, 0.1)
-            gs = st.number_input("Scheduling sensitivity γ", 0.1, 10.0, 1.0, 0.1)
+            gs = st.number_input("Scheduling sensitivity λ", 0.1, 10.0, 1.0, 0.1)
             fr0, f0, M0 = R["base_CBT-R-DS_params"]
             f_r, f = st.slider("Repair and replacement limits (fraction of H)", 0.05, 1.2,
                                (float(fr0), float(f0)), 0.05)
@@ -233,7 +233,7 @@ def page_simulate():
         sys_name = c1.selectbox("System", list(m.SYSTEMS))
         key, P = m.SYSTEMS[sys_name]
         policies = m.paper_policies(key, W, R)
-        pol_name = c2.selectbox("Policy", list(policies), index=list(policies).index("DQN-II-DS (proposed)"))
+        pol_name = c2.selectbox("Policy", list(policies), index=list(policies).index("DQN-II-DS"))
         seed = c3.number_input("Random seed", 0, 10**6, 1, 1)
     fn, info, sched, dt_fixed, insp = policies[pol_name]
     res, trace = m.run_episode(P, fn, info, sched, dt_fixed, int(seed), insp, log=True)
@@ -393,7 +393,7 @@ def page_results():
                                  line=dict(color=PALETTE["CBT-DS"], width=2)))
         fig.add_trace(go.Bar(x=f3.gamma, y=f3["DQN-II-DS inspections"], name="DQN-II-DS inspections",
                              marker_color="rgba(148,163,184,.35)"), secondary_y=True)
-        fig.update_layout(title="Effect of scheduling sensitivity γ", xaxis_title="γ")
+        fig.update_layout(title="Effect of scheduling sensitivity λ", xaxis_title="λ")
         fig.update_yaxes(title_text="cost per unit time", secondary_y=False)
         fig.update_yaxes(title_text="inspections per history", secondary_y=True)
         st.plotly_chart(style(fig, 440), width="stretch")
@@ -422,7 +422,7 @@ with st.sidebar:
 <div class="sb-step"><div class="n">2</div><div>Combine each reading with the virtual age into a Bayesian estimate</div></div>
 <div class="sb-step"><div class="n">3</div><div>Choose one of five actions per component</div></div>
 <div class="sb-step"><div class="n">4</div><div>Set the next inspection from the most degraded component</div></div>
-<div class="sb-foot">Companion app of the paper<br><b>Deep Reinforcement Learning for Maintenance under
-Imperfect Inspections, with a Web-Based Decision Tool</b></div>
+<div class="sb-foot">Companion app of the paper<br><b>Maintenance under Imperfect Inspections Using
+Deep Reinforcement Learning, with a Web-Based Decision Tool</b></div>
 """, unsafe_allow_html=True)
 nav.run()
